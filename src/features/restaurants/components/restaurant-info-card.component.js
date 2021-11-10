@@ -1,49 +1,24 @@
 import React from 'react'
-import { Text, StyleSheet, Image, View } from 'react-native'
+import { StyleSheet, Image, View } from 'react-native'
 import { Card } from 'react-native-paper'
 import styled from 'styled-components/native'
 import { SvgXml } from 'react-native-svg'
 
 import star from '../../../../assets/star'
 import open from '../../../../assets/open'
+import { Spacer } from '../../../components/spacer/spacer.component'
+import { Text } from '../../../components/typography/text.component'
 
-const RestaurantCard = styled(Card)``
-
-const RestaurantCardCover = styled(Card.Cover)``
-
-const Info = styled.View`
-	padding: ${(props) => props.theme.space[2]};
-`
-
-const Address = styled.Text`
-	font-family: ${(props) => props.theme.fonts.heading};
-	text-transform: capitalize;
-	padding: ${(props) => props.theme.space[1]} 0px;
-`
-
-const Title = styled(Text)`
-	font-family: ${(props) => props.theme.fonts.body}
-	font-size: ${(props) => props.theme.fontSizes.body};
-	color: ${(props) => props.theme.colors.ui.primary};
-`
-
-const Rating = styled.View`
-	flex-direction: row;
-	padding: ${(props) => props.theme.space[2]} 0px;
-`
-
-const Section = styled.View`
-	flex-direction: row;
-	align-items: center;
-`
-
-const SectionEnd = styled.View`
-	flex: 1;
-	flex-direction: row;
-	justify-content: flex-end;
-`
-
-const Closed = styled.View``
+import {
+	RestaurantCard,
+	RestaurantCardCover,
+	Info,
+	Address,
+	Rating,
+	Section,
+	SectionEnd,
+	Icon,
+} from './restaurant-info-card.styles'
 
 export const RestaurantInfoCard = ({ restaurant = {} }) => {
 	const {
@@ -59,28 +34,33 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
 	} = restaurant
 
 	const ratingArray = Array.from(new Array(Math.floor(rating)))
-	console.log(ratingArray)
+	console.log(restaurant)
 	return (
 		<RestaurantCard elevation={5}>
 			<RestaurantCardCover key={name} source={{ uri: photos[0] }} />
 			<Info>
-				<Title>{name}</Title>
+				<Text>{name}</Text>
 				<Section>
 					<Rating>
-						{ratingArray.map(() => (
-							<SvgXml xml={star} width={20} height={20} />
+						{ratingArray.map((_, i) => (
+							<SvgXml
+								// key={`star-${placeId}-${i}`}
+								xml={star}
+								width={20}
+								height={20}
+							/>
 						))}
 					</Rating>
 					<SectionEnd>
 						{isClosedTemporarily && (
-							<Text variant='label' style={{ color: 'red' }}>
-								CLOSED TEMPORARILY
-							</Text>
+							<Text variant='error'>CLOSED TEMPORARILY</Text>
 						)}
-						<View style={{ paddingLeft: 16 }} />
-						{isOpenNow && <SvgXml xml={open} width={20} height={20} />}
-						<View style={{ paddingLeft: 16 }} />
-						<Image style={{ width: 15, height: 15 }} source={{ uri: icon }} />
+						<Spacer position='left' size='large'>
+							{isOpenNow && <SvgXml xml={open} width={20} height={20} />}
+						</Spacer>
+						<Spacer position='left' size='large'>
+							<Icon source={{ uri: icon }} />
+						</Spacer>
 					</SectionEnd>
 				</Section>
 				<Address>{address}</Address>
