@@ -9,6 +9,7 @@ import { RestaurantInfoCard } from '../components/restaurant-info-card.component
 import { Search } from '../components/search.component'
 
 import { RestaurantContext } from '../../../services/restaurants/restaurants.context'
+import { FavouritesContext } from '../../../services/favourites/favourites.context'
 
 const RestaurantListContainer = styled.View`
 	flex: 1;
@@ -23,7 +24,9 @@ const Loading = styled(ActivityIndicator)`
 export const RestaurantsScreen = ({ navigation }) => {
 	// console.log(navigation)
 	const { restaurants, isLoading, error } = useContext(RestaurantContext)
-	console.log('Restaurant screen', restaurants)
+	// console.log('Restaurant screen', restaurants)
+	const { favourites } = useContext(FavouritesContext)
+	// console.log(favourites)
 	return (
 		<SafeArea>
 			<Search />
@@ -36,7 +39,7 @@ export const RestaurantsScreen = ({ navigation }) => {
 						return (
 							<TouchableOpacity
 								onPress={() =>
-									navigation.navigate('RestaurantsDetail', { restaurant: item })
+									navigation.navigate('RestaurantDetail', { restaurant: item })
 								}>
 								<Spacer position='bottom' size='medium'>
 									<RestaurantInfoCard restaurant={item} />
