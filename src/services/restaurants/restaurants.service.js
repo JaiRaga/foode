@@ -7,8 +7,8 @@ export const restaurantsRequest = (location) => {
 		if (!mock) {
 			reject('Location not found')
 		}
-		console.log('restaurant service mock location', location)
-		console.log('restaurant service mock location', mock)
+		// console.log('restaurant service mock location', location)
+		// console.log('restaurant service mock location', mock)
 		resolve(mock)
 	})
 }
